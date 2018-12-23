@@ -89,7 +89,8 @@ class AnonymousClassReplacer extends NodeVisitorAbstract
         }
 
         if ($hookIndex === false) {
-            throw InvalidPhpCode::noValidLocationFoundToInsertClasses();
+            return 1;
+            //throw InvalidPhpCode::noValidLocationFoundToInsertClasses();
         }
 
         return $hookIndex;
