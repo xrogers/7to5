@@ -60,6 +60,13 @@ class YieldReturnReplacer extends NodeVisitorAbstract
             )
         );
 
-        return $newReturn;
+        $newYield = new Node\Stmt\If_(
+            new Node\Expr\ConstFetch(new Node\Name('true')),
+            ['stmts' => [$newReturn, new Node\Stmt\Return_()]]
+        );
+
+
+
+        return $newYield;
     }
 }
