@@ -23,6 +23,6 @@ class ClosureCallReplacer extends NodeVisitorAbstract
         if ($name instanceof Node\Expr\Variable) {
             return;
         }
-        return new Node\Expr\FuncCall(new Node\Name('\\callMe'), [$node->name]);
+        return new Node\Expr\FuncCall(new Node\Name('\\callMe'), [$name]);
     }
 }
