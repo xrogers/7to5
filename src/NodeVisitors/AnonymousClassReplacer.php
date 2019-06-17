@@ -16,7 +16,7 @@ class AnonymousClassReplacer extends NodeVisitorAbstract
      * @var array
      */
     protected $anonymousClassNodes = [];
-
+    public static $count = 0;
     /**
      * {@inheritdoc}
      */
@@ -31,7 +31,7 @@ class AnonymousClassReplacer extends NodeVisitorAbstract
             return;
         }
 
-        $newClassName = 'AnonymousClass'.count($this->anonymousClassNodes);
+        $newClassName = 'AnonymousClass'.(self::$count++);
 
         $classNode->name = $newClassName;
 
