@@ -26,7 +26,13 @@ class YieldReturnDetector extends NodeVisitorAbstract
         if ($node instanceof Node\Expr\Yield_ ||
             $node instanceof Node\Expr\YieldFrom
         ) {
-            $this->hasYield[count($this->hasYield) - 1]->hasYield = true;
+            end($this->hasYield)->hasYield = true;
+        }
+    }
+    public function leaveNode(Node $node)
+    {
+        if ($node instanceof Node\FunctionLike) {
+            array_pop($this->hasYield);
         }
     }
 }

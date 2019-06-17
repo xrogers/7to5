@@ -5,6 +5,7 @@ namespace Spatie\Php7to5;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use Spatie\Php7to5\Exceptions\InvalidParameter;
+use Spatie\Php7to5\NodeVisitors\YieldReturnDetector;
 
 class Converter
 {
@@ -46,13 +47,26 @@ class Converter
 
         $php7Statements = $parser->parse($php7code);
 
+        $traverser = $this->getSimpleTraverser();
+
+        $traverser->traverse($php7Statements);
+        
         $traverser = $this->getTraverser();
 
         $php5Statements = $traverser->traverse($php7Statements);
 
+        //$php5Statements = $traverser->traverse($php5Statements);
+
         return (new \PhpParser\PrettyPrinter\Standard())->prettyPrintFile($php5Statements);
     }
 
+
+    public static function getSimpleTraverser()
+    {
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new YieldReturnDetector);
+        return $traverser;
+    }
     /**
      * @return \PhpParser\NodeTraverser
      */
