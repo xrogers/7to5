@@ -4,7 +4,6 @@ namespace Spatie\Php7to5\NodeVisitors;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
-use PhpParser\ParserFactory;
 
 class YieldSpecialReplacer extends NodeVisitorAbstract
 {
@@ -21,14 +20,19 @@ class YieldSpecialReplacer extends NodeVisitorAbstract
         if ($value instanceof Node\Expr\Variable && $value->name !== "this") {
             return;
         }
+
         if ($value instanceof Node\Expr\FuncCall ||
-            $value instanceof Node\Expr\MethodCall ||
             $value instanceof Node\Expr\StaticCall ||
             $value instanceof Node\Scalar
         ) {
             return;
         }
+        if ($value instanceof Node\Expr\MethodCall && $value->var instanceof Node\Expr\Variable
+        ) {
+            return;
+        }
         $value = new Node\Expr\FuncCall(new Node\Name('\\returnMe'), [$value]);
+
         return $node;
     }
 }
