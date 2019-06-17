@@ -18,7 +18,6 @@ class YieldSpecialReplacer extends NodeVisitorAbstract
         }
         //Node\Expr\ArrayDimFetch
         $value = &$node->value;
-        var_dump($value, $value instanceof Node\Expr\Variable);
         if ($value instanceof Node\Expr\Variable && $value->name !== "this") {
             return;
         }
@@ -29,7 +28,6 @@ class YieldSpecialReplacer extends NodeVisitorAbstract
         ) {
             return;
         }
-        var_dump($value);
         $value = new Node\Expr\FuncCall(new Node\Name('\\returnMe'), [$value]);
         return $node;
     }
