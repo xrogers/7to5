@@ -16,7 +16,6 @@ class InstanceOfReplacer extends NodeVisitorAbstract
      */
     public function leaveNode(Node $node)
     {
-        var_dump($node);
         if (!$node instanceof Node\Expr\Instanceof_) {
             return;
         }
