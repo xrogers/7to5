@@ -19,7 +19,7 @@ class ExceptionReplacer extends NodeVisitorAbstract
         foreach ($node->catches as $catch) {
             $has_error = false;
             $needs = false;
-            foreach ($catch->types as $type) {
+            foreach ($catch->types as &$type) {
                 if ($type instanceof Node\Name\FullyQualified &&
                     $type->getLast() === "Error") {
                     $has_error = true;
@@ -27,6 +27,7 @@ class ExceptionReplacer extends NodeVisitorAbstract
                 if ($type instanceof Node\Name\FullyQualified &&
                     $type->getLast() === "Throwable") {
                     $needs = true;
+                    $type = new Node\Name\FullyQualified('Exception');
                 }
             }
             if ($needs) {
