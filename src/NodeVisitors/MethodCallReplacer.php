@@ -5,7 +5,7 @@ namespace Spatie\Php7to5\NodeVisitors;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
-class YieldMethodCallReplacer extends NodeVisitorAbstract
+class MethodCallReplacer extends NodeVisitorAbstract
 {
     /**
      * {@inheritdoc}
@@ -15,9 +15,11 @@ class YieldMethodCallReplacer extends NodeVisitorAbstract
         if (!$node instanceof Node\Expr\MethodCall) {
             return;
         }
-        //Node\Expr\ArrayDimFetch
         $value = &$node->var;
-        if (!$value instanceof Node\Expr\Yield_) {
+        if (!$value instanceof Node\Expr\Clone_ &&
+            !$value instanceof Node\Expr\Yield_ &&
+            !$value instanceof Node\Expr\Closure
+        ) {
             return;
         }
         $value = new Node\Expr\FuncCall(new Node\Name('\\returnMe'), [$value]);

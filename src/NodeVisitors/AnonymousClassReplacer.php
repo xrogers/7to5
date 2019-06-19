@@ -41,7 +41,8 @@ class AnonymousClassReplacer extends NodeVisitorAbstract
         $newNode = new Node\Expr\New_(
             new Node\Expr\ConstFetch(
                 new Node\Name($newClassName)
-            )
+            ),
+            $node->args
         );
 
         return $newNode;

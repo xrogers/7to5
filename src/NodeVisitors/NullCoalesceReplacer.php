@@ -32,6 +32,9 @@ class NullCoalesceReplacer extends NodeVisitorAbstract
                 $node->left->right = new Node\Expr\Ternary($issetCall, $node->left->right, $node->right);
                 return $node->left;
             default:
+                if ($test instanceof Node\Expr\ArrayDimFetch && $test->var instanceof Node\Expr\Array_) {
+                    $node->left->var = new Node\Expr\FuncCall(new Node\Name('\\returnMe'), [$node->left->var]);
+                }
                 $issetCall = new Node\Expr\FuncCall(new Node\Name('isset'), [$node->left]);
                 return new Node\Expr\Ternary($issetCall, $node->left, $node->right);
         }

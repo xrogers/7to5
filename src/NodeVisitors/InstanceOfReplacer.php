@@ -26,7 +26,7 @@ class InstanceOfReplacer extends NodeVisitorAbstract
         }
         return new BooleanOr(
             new Instanceof_($node->expr, $type),
-            new Instanceof_($node->expr, new FullyQualified('Error')),
+            new Instanceof_($node->expr, new FullyQualified('Error'))
         );
     }
 }
