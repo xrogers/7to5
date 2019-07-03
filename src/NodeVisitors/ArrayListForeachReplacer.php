@@ -1,6 +1,6 @@
 <?php
 
-namespace danog\Php7to5\NodeVisitors;
+namespace Spatie\Php7to5\NodeVisitors;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
