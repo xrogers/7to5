@@ -22,6 +22,27 @@ class ArrayListReplacer extends NodeVisitorAbstract
         if (!$node->var instanceof Node\Expr\Array_) {
             return;
         }
-        $node->var = new Node\Expr\List_($node->var->items);
+        $list = true;
+        foreach ($node->var->items as $item) {
+            if (isset($item->key)) {
+                $list = false;
+                break;
+            }
+        }
+        if ($list) {
+            $node->var = new Node\Expr\List_($node->var->items);
+        } else {
+            $newList = [];
+            $keys = [];
+            $key = 0;
+            foreach ($node->var->items as $item) {
+                $newList []= $item->value;
+                $keys []= $item->key ? $item->key : $key++;
+            }
+            $newList = new Node\Expr\List_($newList);
+            $keys = new Node\Expr\Array_($keys);
+            $node->var = $newList;
+            $node->expr = new Node\Expr\FuncCall(new Node\Name('\\__destructure'), [$keys, $node->expr]);
+        }
     }
 }
