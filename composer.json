@@ -1,5 +1,5 @@
 {
-    "name": "spatie/7to5",
+    "name": "danog/7to5",
     "description": "Convert PHP 7 code to PHP 5 code",
     "keywords": [
         "spatie",
@@ -10,7 +10,7 @@
         "syntax",
         "tree"
     ],
-    "homepage": "https://github.com/spatie/7to5",
+    "homepage": "https://github.com/danog/7to5",
     "license": "MIT",
     "authors": [
         {
