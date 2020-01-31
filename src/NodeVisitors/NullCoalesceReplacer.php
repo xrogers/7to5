@@ -16,9 +16,8 @@ class NullCoalesceReplacer extends NodeVisitorAbstract
         if (!$node instanceof Coalesce) {
             return;
         }
-        $test = $node->left;
-        if (!($test instanceof Node\Expr\ErrorSuppress)) {
-            $test = new Node\Expr\ErrorSuppress($test);
+        if (!($node->left instanceof Node\Expr\ErrorSuppress)) {
+            $node->left = new Node\Expr\ErrorSuppress($node->left);
         }
         return new Node\Expr\FuncCall(new Node\Name('\\__coalesce'), [$test, $node->right]);
     }
